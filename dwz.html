@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>DWZ Rechner</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Custom styles for this template -->
+<link rel="stylesheet" href="css/dwzstyle.css">
+</head>
+<body>
+
+
+
+	<div class="container">
+
+		<h1>DWZ Rechner</h1>
+		<div id="mainContent">
+			<div id="rechnerFormular" class="row">
+
+				<div class="panel panel-info">
+					<div class="panel-heading">deine Daten:</div>
+
+					<div class="panel-body">
+						Alter: <select class="btn btn-default" id="alter" name="alter">
+							<option value="0">unter 20 Jahre</option>
+							<option value="1">20 bis 25 Jahre</option>
+							<option value="2" selected>über 25 Jahre</option>
+						</select> DWZ: <input type="text" name="eigenedwz" value="" size="4"
+							onchange="checkDWZ(this)">
+
+					</div>
+
+				</div>
+
+				<div class="panel panel-info">
+					<div class="panel-heading">deine Gegner:</div>
+
+					<div class="panel-body">
+						<div class="col-lg-4">
+							<!-- Eingabefeld für die DWZ Parameter -->
+
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-lg-4">
+							<!-- Eingabefeld für die DWZ Parameter -->
+
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-lg-4">
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+								</div>
+							</div>
+							<!-- Eingabefeld für die DWZ Parameter -->
+							<div class="panel panel-info">
+								<div class="panel-body">
+
+									DWZ: <input type="text" name="dwz" value="" size="4"
+										onchange="checkDWZ(this)"> Punkt: <select
+										class="btn btn-default" name="punkte">
+										<option value="0">0</option>
+										<option value="0.5">0,5</option>
+										<option value="1">1</option>
+									</select>
+
+								</div>
+							</div>
+						</div>
+						<div id="moreFields"></div>
+					</div>
+					<div class="panel-footer">
+
+
+						<button class="addInputs btn btn-primary" onclick="addFields()">
+							<img alt="plus" src="images/list-add-4.png"> mehr DWZ
+							Felder
+						</button>
+						<button class="removeInputs btn btn-primary"
+							onclick="removeFields()">
+							<img alt="minus" src="images/list-remove-4.png">weniger DWZ
+							Felder
+						</button>
+
+
+					</div>
+				</div>
+				<div class="panel panel-info">
+					<div class="panel-heading">Ausgabe:</div>
+					<div class="panel-body">
+						<div class="col-lg-4">
+							<div class="panel panel-info">
+								<div class="panel-heading">Formular:</div>
+								<div class="panel-body">
+
+
+									<button class="submit btn btn-primary btn-block"
+										onclick="berechnenButtonClicked()">
+										<img alt="calc" src="images/media-playback-start-7.png">Rechne
+									</button>
+
+									<button class="reset btn btn-primary btn-block"
+										onclick="resetAll()">
+										<img alt="reset" src="images/media-playback-stop-7.png">Reset
+									</button>
+
+									<button class="info btn btn-primary btn-block" onclick="info()">
+										<img alt="info" src="images/help-about-3.png">Info
+									</button>
+
+								</div>
+								<br />
+
+							</div>
+
+						</div>
+						<div class="col-lg-4">
+							<div class="panel panel-info">
+
+								<div class="panel-heading">Ergebnis:</div>
+								<div class="panel-body">
+
+									<div id="ergebnis">&nbsp;</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="panel panel-info">
+								<div class="panel-heading">Speichern:</div>
+								<div class="panel-body">
+									<button id="savecookie" class="btn btn-primary btn-block">
+										<img alt="plus" src="images/document-save-5.png"> Daten
+										speichern
+									</button>
+									<br /> <br />
+									<div class="alert alert-dismissible alert-success">
+										<button type="button" class="close" data-dismiss="alert">
+											&times;</button>
+										Dieses Script speichert die eingegebenen Daten als Cookie auf
+										ihrem Rechner sobald Sie "Daten speichern" anklicken. Damit
+										Sie beim nächsten Besuch die Daten nicht nochmal eingeben
+										müssen.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="js/json2.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src="js/dwzrechner.js"></script>
+	<script src="js/dwzcalc.js"></script>
+
+</body>
+</html>
