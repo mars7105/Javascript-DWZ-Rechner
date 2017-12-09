@@ -57,21 +57,22 @@ function init() {
 
 function berechnenButtonClicked() {
 	if (readAndCheckFormularInputs() == true) {
-		clearImage();
+		//clearImage();
 		initialisiereTabellen();
 		calculateNewDWZ();
 	}
 }
 
 function clearImage() {
-	document.getElementById("ergebnis").innerHTML = "&nbsp;";
+	//document.getElementById("ergebnis").innerHTML = "&nbsp;";
 }
 
 function info() {
+	var content = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Dieser DWZ Rechner ist unter der GNU Lizenz zu haben.<br /><a href="https://sourceforge.net/projects/javascriptdwzrechner/" target="_blank">Download</a></div>' + document.getElementById("ergebnis").innerHTML;
 
-	document.getElementById("ergebnis").innerHTML = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Dieser DWZ Rechner ist unter der GNU Lizenz zu haben.<br /><a href="https://sourceforge.net/projects/javascriptdwzrechner/" target="_blank">Download</a></div>';
+	document.getElementById("ergebnis").innerHTML = content;
 
-	setFocus();
+	//setFocus();
 }
 
 function addFields() {
@@ -97,7 +98,7 @@ function addFields() {
 			document.getElementsByName("punkte")[i].value = formular_Punkte[i];
 		}
 	}
-	setFocus();
+	//setFocus();
 }
 
 function removeFields() {
@@ -127,10 +128,10 @@ function removeFields() {
 		}
 		//berechnenButtonClicked();
 	} else {
-		document.getElementById("ergebnis").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>9 DWZ Felder sind das Minimum.</div>';
-		
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>9 DWZ Felder sind das Minimum.</div>' + document.getElementById("ergebnis").innerHTML;
+		document.getElementById("ergebnis").innerHTML = content;
 	}
-	setFocus();
+	//setFocus();
 }
 
 function resetAll() {
@@ -144,7 +145,7 @@ function resetAll() {
 		document.getElementsByName("punkte")[i].selectedIndex = "0";
 	}
 	clearImage();
-	setFocus();
+	// setFocus();
 }
 
 function readAndCheckFormularInputs() {
@@ -179,9 +180,10 @@ function readAndCheckFormularInputs() {
 		// Für den Fall, das keine Gegner eingegeben wurden:
 		if (formular_AnzahlGegner == 0) {
 			clearImage();
-			document.getElementById("ergebnis").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Es muss mindestens eine gegnerische DWZ eingegeben werden.</div>';
+			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Es muss mindestens eine gegnerische DWZ eingegeben werden.</div>' + document.getElementById("ergebnis").innerHTML;
+			document.getElementById("ergebnis").innerHTML = content;
 			formular_AnzahlGegner = 0;
-			
+
 			return false;
 
 		} else {
@@ -193,11 +195,12 @@ function readAndCheckFormularInputs() {
 	} else {
 		// Bei fehlender oder falscher Eingabe der eigenen DWZ gibt es einen Warnhinweis
 		clearImage();
-		document.getElementById("ergebnis").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>';
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>' + document.getElementById("ergebnis").innerHTML;
+		document.getElementById("ergebnis").innerHTML = content;
 		formular_AnzahlGegner = 0;
 		document.getElementsByName("eigenedwz")[0].value = "";
 		document.getElementsByName("eigenedwz")[0].focus();
-		
+
 		return false;
 	}
 
@@ -210,7 +213,7 @@ function checkDWZ(field) {
 	if (testDWZRange(field.value) == false) {
 		field.value = "";
 		field.blur();
-		setFocus();
+		//setFocus();
 	}
 
 }
@@ -234,15 +237,14 @@ function testDWZRange(number) {
 		if (number >= 0 && number <= 3000) {
 			return true;
 		} else {
-			clearImage();
-			document.getElementById("ergebnis").innerHTML = '<div class="notice"><div class="important">&nbsp;</div>Bitte gib eine Zahl zwischen 0 und 3000 ein.</div>';
-			
+			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>' + document.getElementById("ergebnis").innerHTML;
+
+			document.getElementById("ergebnis").innerHTML = content;
 			return false;
 		}
 	} else {
-		clearImage();
-		document.getElementById("ergebnis").innerHTML = '<div class="notice"><div class="important">&nbsp;</div>Nur Zahlen sind erlaubt.</div>';
-		
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Nur Zahlen sind erlaubt.</div>' + document.getElementById("ergebnis").innerHTML;
+		document.getElementById("ergebnis").innerHTML = content;
 		return false;
 	}
 }
@@ -259,11 +261,13 @@ function calculateNewDWZ() {
 }
 
 function output() {
-	var test = "<div class='alert alert-dismissible alert-success'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + "<div class='ergbnisbox'><div class='indexfeld'>alte DWZ:</div> <div class='ergebnisfeld'>" + player.oldDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gegneranzahl:</div> <div class='ergebnisfeld'>" + player.numberOfOpponents + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gesamtpunkte:</div> <div class='ergebnisfeld'>" + player.punkte + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>&#216; DWZ:</div> <div class='ergebnisfeld'>" + player.durchschnittderGegnerDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Leistung:</div> <div class='ergebnisfeld'>" + player.leistungsDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>neue DWZ:</div> <div class='ergebnisfeld'>" + player.folgeDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Punkterwartung:</div> <div class='ergebnisfeld'>" + player.punkterwartung + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>E:</div> <div class='ergebnisfeld'>" + player.entwicklungskoeffizient + "</div></div>";
-
-	test += "</div>";
-
-	clearImage();
+	var test = "<div class='alert alert-dismissible alert-success'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + "<div class='ergbnisbox'><div class='indexfeld'>alte DWZ:</div> <div class='ergebnisfeld'>";
+	test += player.oldDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gegneranzahl:</div> <div class='ergebnisfeld'>" + player.numberOfOpponents + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gesamtpunkte:</div> <div class='ergebnisfeld'>";
+	test += player.punkte + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>&#216; DWZ:</div> <div class='ergebnisfeld'>" + player.durchschnittderGegnerDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Leistung:</div> <div class='ergebnisfeld'>";
+	test += player.leistungsDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>neue DWZ:</div> <div class='ergebnisfeld'>" + player.folgeDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Punkterwartung:</div> <div class='ergebnisfeld'>";
+	test += player.punkterwartung + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>E:</div> <div class='ergebnisfeld'>" + player.entwicklungskoeffizient + "</div></div></div>";
+	test += document.getElementById("ergebnis").innerHTML;
+	//	clearImage();
 	document.getElementById("ergebnis").innerHTML = test;
 }
 
