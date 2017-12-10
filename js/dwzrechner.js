@@ -37,7 +37,7 @@ var formular_EigeneDWZ;
 var formular_GegnerDWZ = new Array(0);
 var formular_Punkte = new Array(0);
 var formular_AnzahlGegner;
-//Entwicklungskoeffizient Variablen
+// Entwicklungskoeffizient Variablen
 var grundwert;
 var beschleunigungsfaktor;
 var bremszuschlag;
@@ -57,26 +57,28 @@ function init() {
 
 function berechnenButtonClicked() {
 	if (readAndCheckFormularInputs() == true) {
-		//clearImage();
+		// clearImage();
 		initialisiereTabellen();
 		calculateNewDWZ();
 	}
 }
 
 function clearImage() {
-	//document.getElementById("ergebnis").innerHTML = "&nbsp;";
+	// document.getElementById("ergebnis").innerHTML = "&nbsp;";
 }
 
 function info() {
-	var content = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Dieser DWZ Rechner ist unter der GNU Lizenz zu haben.<br /><a href="https://sourceforge.net/projects/javascriptdwzrechner/" target="_blank">Download</a></div>' + document.getElementById("ergebnis").innerHTML;
+	var content = '<div class="alert alert-dismissible alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>'
+			+ 'Dieser DWZ Rechner ist unter der GNU Lizenz zu haben.<br /><a href="https://sourceforge.net/projects/javascriptdwzrechner/" target="_blank">Download</a></div>'
+			+ document.getElementById("ergebnis").innerHTML;
 
 	document.getElementById("ergebnis").innerHTML = content;
 
-	//setFocus();
+	// setFocus();
 }
 
 function addFields() {
-	var inputFields = '<div class="col-lg-4"><div  class="panel panel-default"><div class="panel-body">DWZ: <input type="text" name="dwz" value="" size="4" onchange="checkDWZ(this)">Punkt: <select class="btn btn-default" name="punkte"><option value="0"> 0</option><option value="0.5">0,5</option><option value="1"> 1</option></select></div></div></div>';
+	var inputFields = '<div class="panel panel-info"><div class="panel-body">DWZ: <input type="text" name="dwz" value="" size="4" onchange="checkDWZ(this)">Punkt: <select class="btn btn-default" name="punkte"><option value="0"> 0</option><option value="0.5">0,5</option><option value="1"> 1</option></select></div></div>';
 	var dwzbox = "";
 	var boxName = "";
 	if (ANZAHL_DWZ_FELDER > 9) {
@@ -87,18 +89,39 @@ function addFields() {
 		}
 	}
 
-	//for (var i = 0; i < 3; i++) {
+	// for (var i = 0; i < 3; i++) {
 	dwzbox += inputFields;
 	ANZAHL_DWZ_FELDER++;
-	//}
-	document.getElementById("moreFields").innerHTML += dwzbox;
+	// }
+	var spalten = Math.round(ANZAHL_DWZ_FELDER / 3 + 0.5);
+	if (ANZAHL_DWZ_FELDER % 3 == 0) {
+		document.getElementById("moreFields3").innerHTML += dwzbox;
+	} else if ((ANZAHL_DWZ_FELDER) % 2 == 0 && spalten % 2 == 0) {
+
+		document.getElementById("moreFields1").innerHTML += dwzbox;
+
+	} else if ((ANZAHL_DWZ_FELDER) % 2 == 0 && spalten % 2 > 0) {
+
+		document.getElementById("moreFields2").innerHTML += dwzbox;
+
+	} else if ((ANZAHL_DWZ_FELDER) % 2 > 0 && spalten % 2 == 0) {
+
+		document.getElementById("moreFields2").innerHTML += dwzbox;
+
+	} else if ((ANZAHL_DWZ_FELDER) % 2 > 0 && spalten % 2 > 0) {
+
+		document.getElementById("moreFields1").innerHTML += dwzbox;
+
+	}
+
+	// document.getElementById("moreFields").innerHTML += dwzbox;
 	if (ANZAHL_DWZ_FELDER > 12) {
 		for (var i = 9; i < ANZAHL_DWZ_FELDER - 3; i++) {
 			document.getElementsByName("dwz")[i].value = formular_GegnerDWZ[i];
 			document.getElementsByName("punkte")[i].value = formular_Punkte[i];
 		}
 	}
-	//setFocus();
+	// setFocus();
 }
 
 function removeFields() {
@@ -115,10 +138,10 @@ function removeFields() {
 		document.getElementById("moreFields").innerHTML = "";
 		ANZAHL_DWZ_FELDER = 9;
 		for (var z = 0; z < (differenzFelder - 1); z++) {
-			//for (var i = 0; i < 3; i++) {
+			// for (var i = 0; i < 3; i++) {
 			dwzbox += inputFields;
 			ANZAHL_DWZ_FELDER++;
-			//}
+			// }
 
 		}
 		document.getElementById("moreFields").innerHTML += dwzbox;
@@ -126,16 +149,19 @@ function removeFields() {
 			document.getElementsByName("dwz")[i].value = formular_GegnerDWZ[i];
 			document.getElementsByName("punkte")[i].value = formular_Punkte[i];
 		}
-		//berechnenButtonClicked();
+		// berechnenButtonClicked();
 	} else {
-		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>9 DWZ Felder sind das Minimum.</div>' + document.getElementById("ergebnis").innerHTML;
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>9 DWZ Felder sind das Minimum.</div>'
+				+ document.getElementById("ergebnis").innerHTML;
 		document.getElementById("ergebnis").innerHTML = content;
 	}
-	//setFocus();
+	// setFocus();
 }
 
 function resetAll() {
-	document.getElementById("moreFields").innerHTML = "";
+	document.getElementById("moreFields1").innerHTML = "";
+	document.getElementById("moreFields2").innerHTML = "";
+	document.getElementById("moreFields3").innerHTML = "";
 	document.getElementsByName("eigenedwz")[0].value = "";
 	document.getElementsByName("alter")[0].selectedIndex = "2";
 	document.getElementById("ergebnis").innerHTML = "";
@@ -144,6 +170,7 @@ function resetAll() {
 		document.getElementsByName("dwz")[i].value = "";
 		document.getElementsByName("punkte")[i].selectedIndex = "0";
 	}
+	 ANZAHL_DWZ_FELDER = 9;
 	clearImage();
 	// setFocus();
 }
@@ -158,7 +185,7 @@ function readAndCheckFormularInputs() {
 	formular_EigeneDWZ = document.getElementsByName("eigenedwz")[0].value;
 	// Wenn die eigene DWZ richtig ist werden die Felder abgefragt
 	formular_Alter = document.getElementsByName("alter")[0].value;
-	//DWZ Felder und Punkte Selektoren abfragen
+	// DWZ Felder und Punkte Selektoren abfragen
 	if (testDWZRange(formular_EigeneDWZ) == true && formular_EigeneDWZ != "") {
 
 		for (var i = 0; i < ANZAHL_DWZ_FELDER; i++) {
@@ -166,21 +193,23 @@ function readAndCheckFormularInputs() {
 			if (testDWZRange(numberDWZ) == true && numberDWZ != "") {
 				// Wenn ein Feld eine korrekte Zahl hat, werden die
 				// Daten ausgelesen
-				formular_GegnerDWZ[formular_AnzahlGegner] = document.getElementsByName("dwz")[i].value;
-				formular_Punkte[formular_AnzahlGegner] = document.getElementsByName("punkte")[i].value;
+				formular_GegnerDWZ[formular_AnzahlGegner] = document
+						.getElementsByName("dwz")[i].value;
+				formular_Punkte[formular_AnzahlGegner] = document
+						.getElementsByName("punkte")[i].value;
 				formular_AnzahlGegner++;
 			}
-			/*else {
-			 //Bei Feldern die keine Eingaben enthalten, wird das
-			 // Array auf -1 gesetzt um so später die Berechnungen korrekt durchführen
-			 // zu können.
-			 formular_GegnerDWZ[i] = -1;
-			 }*/
+			/*
+			 * else { //Bei Feldern die keine Eingaben enthalten, wird das //
+			 * Array auf -1 gesetzt um so später die Berechnungen korrekt
+			 * durchführen // zu können. formular_GegnerDWZ[i] = -1; }
+			 */
 		}
 		// Für den Fall, das keine Gegner eingegeben wurden:
 		if (formular_AnzahlGegner == 0) {
 			clearImage();
-			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Es muss mindestens eine gegnerische DWZ eingegeben werden.</div>' + document.getElementById("ergebnis").innerHTML;
+			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Es muss mindestens eine gegnerische DWZ eingegeben werden.</div>'
+					+ document.getElementById("ergebnis").innerHTML;
 			document.getElementById("ergebnis").innerHTML = content;
 			formular_AnzahlGegner = 0;
 
@@ -193,9 +222,11 @@ function readAndCheckFormularInputs() {
 			return true;
 		}
 	} else {
-		// Bei fehlender oder falscher Eingabe der eigenen DWZ gibt es einen Warnhinweis
+		// Bei fehlender oder falscher Eingabe der eigenen DWZ gibt es einen
+		// Warnhinweis
 		clearImage();
-		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>' + document.getElementById("ergebnis").innerHTML;
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>'
+				+ document.getElementById("ergebnis").innerHTML;
 		document.getElementById("ergebnis").innerHTML = content;
 		formular_AnzahlGegner = 0;
 		document.getElementsByName("eigenedwz")[0].value = "";
@@ -213,7 +244,7 @@ function checkDWZ(field) {
 	if (testDWZRange(field.value) == false) {
 		field.value = "";
 		field.blur();
-		//setFocus();
+		// setFocus();
 	}
 
 }
@@ -237,13 +268,15 @@ function testDWZRange(number) {
 		if (number >= 0 && number <= 3000) {
 			return true;
 		} else {
-			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>' + document.getElementById("ergebnis").innerHTML;
+			var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Deine DWZ muss eine Zahl zwischen 0 und 3000 sein.</div>'
+					+ document.getElementById("ergebnis").innerHTML;
 
 			document.getElementById("ergebnis").innerHTML = content;
 			return false;
 		}
 	} else {
-		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Nur Zahlen sind erlaubt.</div>' + document.getElementById("ergebnis").innerHTML;
+		var content = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><div class="important">&nbsp;</div>Nur Zahlen sind erlaubt.</div>'
+				+ document.getElementById("ergebnis").innerHTML;
 		document.getElementById("ergebnis").innerHTML = content;
 		return false;
 	}
@@ -261,13 +294,32 @@ function calculateNewDWZ() {
 }
 
 function output() {
-	var test = "<div class='alert alert-dismissible alert-success'><button type='button' class='close' data-dismiss='alert'>&times;</button>" + "<div class='ergbnisbox'><div class='indexfeld'>alte DWZ:</div> <div class='ergebnisfeld'>";
-	test += player.oldDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gegneranzahl:</div> <div class='ergebnisfeld'>" + player.numberOfOpponents + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Gesamtpunkte:</div> <div class='ergebnisfeld'>";
-	test += player.punkte + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>&#216; DWZ:</div> <div class='ergebnisfeld'>" + player.durchschnittderGegnerDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Leistung:</div> <div class='ergebnisfeld'>";
-	test += player.leistungsDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>neue DWZ:</div> <div class='ergebnisfeld'>" + player.folgeDWZ + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>Punkterwartung:</div> <div class='ergebnisfeld'>";
-	test += player.punkterwartung + "</div></div>" + "<div class='ergbnisbox'><div class='indexfeld'>E:</div> <div class='ergebnisfeld'>" + player.entwicklungskoeffizient + "</div></div></div>";
+	var test = "<div class='alert alert-dismissible alert-success'><button type='button' class='close' data-dismiss='alert'>&times;</button>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>alte DWZ:</div> <div class='ergebnisfeld'>";
+	test += player.oldDWZ
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>Gegneranzahl:</div> <div class='ergebnisfeld'>"
+			+ player.numberOfOpponents
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>Gesamtpunkte:</div> <div class='ergebnisfeld'>";
+	test += player.punkte
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>&#216; DWZ:</div> <div class='ergebnisfeld'>"
+			+ player.durchschnittderGegnerDWZ
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>Leistung:</div> <div class='ergebnisfeld'>";
+	test += player.leistungsDWZ
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>neue DWZ:</div> <div class='ergebnisfeld'>"
+			+ player.folgeDWZ
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>Punkterwartung:</div> <div class='ergebnisfeld'>";
+	test += player.punkterwartung
+			+ "</div></div>"
+			+ "<div class='ergbnisbox'><div class='indexfeld'>E:</div> <div class='ergebnisfeld'>"
+			+ player.entwicklungskoeffizient + "</div></div></div>";
 	test += document.getElementById("ergebnis").innerHTML;
-	//	clearImage();
+	// clearImage();
 	document.getElementById("ergebnis").innerHTML = test;
 }
 
@@ -311,15 +363,16 @@ function berechnePunkteUndDurchschnittsDWZ() {
 		gesamtpunkte += opponent[i].ergebnis;
 	}
 	player.punkte = gesamtpunkte;
-	player.durchschnittderGegnerDWZ = Math.round(dwzD / player.numberOfOpponents);
+	player.durchschnittderGegnerDWZ = Math.round(dwzD
+			/ player.numberOfOpponents);
 }
 
 /**
- *
- * @param player
- *            : Der Spieler, der seine Leistungszahl errechnen will
- * @param opponents
- *            : Alle Gegner
+ * 
+ * @param player :
+ *            Der Spieler, der seine Leistungszahl errechnen will
+ * @param opponents :
+ *            Alle Gegner
  * @return : Die Leistungszahl
  */
 function calcTurnierLeistung() {
@@ -329,8 +382,10 @@ function calcTurnierLeistung() {
 	// Tabelle Anhang 2.2 Wertungsdifferenzen abhängig von
 	// den Gewinnprozenten P
 	// http://www.schachbund.de/anhang-22.html
-	//WertungsdifferenzenTabelleModel wdTabelle = new WertungsdifferenzenTabelleModel();
-	//double[][] wertungsdifferenzenTabelle = wdTabelle.getWertungsdifferenzenTabelle();
+	// WertungsdifferenzenTabelleModel wdTabelle = new
+	// WertungsdifferenzenTabelleModel();
+	// double[][] wertungsdifferenzenTabelle =
+	// wdTabelle.getWertungsdifferenzenTabelle();
 
 	// nach 4.7.2 We für bisher ungewertete Spieler
 	// Quelle:
@@ -353,7 +408,8 @@ function calcTurnierLeistung() {
 	leistungszahlSpieler.oldDWZ = player.oldDWZ;
 	leistungszahlSpieler.numberOfOpponents = player.numberOfOpponents;
 	leistungszahlSpieler.punkterwartung = player.punkterwartung;
-	var leistungszahlopponent = new Array(leistungszahlSpieler.numberOfOpponents);
+	var leistungszahlopponent = new Array(
+			leistungszahlSpieler.numberOfOpponents);
 	for (var i = 0; i < leistungszahlSpieler.numberOfOpponents; i++) {
 		leistungszahlopponent[i] = new Object();
 		leistungszahlopponent[i].dwz = parseInt(formular_GegnerDWZ[i]);
@@ -388,7 +444,8 @@ function calcTurnierLeistung() {
 				diff = wertungsdifferenzenTabelle[D][i];
 			}
 		}
-		leistungszahlSpieler.oldDWZ = Math.round(leistungszahlSpieler.durchschnittderGegnerDWZ + diff);
+		leistungszahlSpieler.oldDWZ = Math
+				.round(leistungszahlSpieler.durchschnittderGegnerDWZ + diff);
 
 		var pD = 0;
 		var dwz = 0;
@@ -408,13 +465,16 @@ function calcTurnierLeistung() {
 			var punkterwartung = 0;
 			var gewinnerwartung = 0;
 			for (var i = 0; i < leistungszahlSpieler.numberOfOpponents; i++) {
-				leistungszahlopponent[i].gewinnerwartung = getWahrscheinlichkeit(leistungszahlSpieler.oldDWZ, leistungszahlopponent[i].dwz);
+				leistungszahlopponent[i].gewinnerwartung = getWahrscheinlichkeit(
+						leistungszahlSpieler.oldDWZ,
+						leistungszahlopponent[i].dwz);
 				punkterwartung += leistungszahlopponent[i].gewinnerwartung;
 			}
 			leistungszahlSpieler.punkterwartung = punkterwartung;
 			dwz = parseInt(leistungszahlSpieler.oldDWZ);
 			// P(D) - Durchschnitt = (W - We) / n + 0,500
-			pD = (leistungszahlSpieler.punkte - leistungszahlSpieler.punkterwartung) / leistungszahlSpieler.numberOfOpponents + 0.5;
+			pD = (leistungszahlSpieler.punkte - leistungszahlSpieler.punkterwartung)
+					/ leistungszahlSpieler.numberOfOpponents + 0.5;
 			pD = (Math.round(100.0 * pD)) / 100.0;
 			// In der Tabelle Anhang 2.2 Wertungsdifferenzen abhängig von
 			// den Gewinnprozenten P
@@ -447,20 +507,21 @@ function calculateWahrscheinlichkeitModel() {
 	var punkterwartung = 0;
 	var gewinnerwartung = 0;
 	for (var i = 0; i < player.numberOfOpponents; i++) {
-		opponent[i].gewinnerwartung = getWahrscheinlichkeit(player.oldDWZ, opponent[i].dwz);
+		opponent[i].gewinnerwartung = getWahrscheinlichkeit(player.oldDWZ,
+				opponent[i].dwz);
 		punkterwartung += opponent[i].gewinnerwartung;
 	}
 	player.punkterwartung = Math.round(punkterwartung * 1000) / 1000;
 }
 
 /**
- * * Dies ist die Hauptroutine in der die Gewinnerwartung anhand der Tabelle
- * vom DSB (http://www.schachbund.de/anhang-21.html) errechnet wird.
- *
- * @param dwzPlayer
- *            : Die DWZ des Spielers
- * @param dwzOpponent
- *            : Die DWZ des Gegners
+ * * Dies ist die Hauptroutine in der die Gewinnerwartung anhand der Tabelle vom
+ * DSB (http://www.schachbund.de/anhang-21.html) errechnet wird.
+ * 
+ * @param dwzPlayer :
+ *            Die DWZ des Spielers
+ * @param dwzOpponent :
+ *            Die DWZ des Gegners
  * @return gewinnErwartungPD : Die prozentuale Gewinnerwartung
  */
 function getWahrscheinlichkeit(dwzPlayer, dwzOpponent) {
@@ -496,7 +557,8 @@ function getWahrscheinlichkeit(dwzPlayer, dwzOpponent) {
 		// Differenz gesucht.
 		for (var i = 0; i < TABELLENZEILEN; i++) {
 			// Hier ist die Suchabfrage durch die DWZ Differenz
-			if (dwzDifferenz >= wahrscheinlichkeitsTabelle[DWZ_DIFFERENZ_VON][i] && dwzDifferenz <= wahrscheinlichkeitsTabelle[DWZ_DIFFERENZ_BIS][i]) {
+			if (dwzDifferenz >= wahrscheinlichkeitsTabelle[DWZ_DIFFERENZ_VON][i]
+					&& dwzDifferenz <= wahrscheinlichkeitsTabelle[DWZ_DIFFERENZ_BIS][i]) {
 
 				gewinnErwartungPD = wahrscheinlichkeitsTabelle[spielerStaerke][i];
 
@@ -529,7 +591,8 @@ function entwicklungskoeffizientModel() {
 	grundwert = grundwertBerechnen();
 	beschleunigungsfaktor = beschleunigungsfaktorBerechnen();
 	bremszuschlag = bremszuschlagBerechnen();
-	player.entwicklungskoeffizient = grundwert * beschleunigungsfaktor + bremszuschlag;
+	player.entwicklungskoeffizient = grundwert * beschleunigungsfaktor
+			+ bremszuschlag;
 	// Für E gelten folgende Begrenzungen:
 	// Der Wert von E ist stets ganzzahlig gerundet anzusetzen.
 	// Er ist abhängig vom Index und muss mindestens 5 betragen.
@@ -640,7 +703,9 @@ function folgeDWZModel() {
 
 	// Rn = Ro + 800 x (W - We) / (E + n)
 	player.folgeDWZ = 0;
-	player.folgeDWZ = Math.round(player.oldDWZ + (800 * (player.punkte - player.punkterwartung) / (player.entwicklungskoeffizient + player.numberOfOpponents)));
+	player.folgeDWZ = Math
+			.round(player.oldDWZ
+					+ (800 * (player.punkte - player.punkterwartung) / (player.entwicklungskoeffizient + player.numberOfOpponents)));
 }
 
 function initialisiereTabellen() {
